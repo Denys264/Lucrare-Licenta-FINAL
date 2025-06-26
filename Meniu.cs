@@ -681,11 +681,11 @@ namespace Gestiune_Bar_proiect_LICENTA
                     string folderPath = Path.Combine(desktopPath, "Rapoarte", "Note de plata");
                     Directory.CreateDirectory(folderPath);
 
-                    int numarNota = DateTime.Now.Ticks.GetHashCode();
+                    int nrNota = Directory.GetFiles(folderPath, "Nota intrare *.pdf").Length + 1;
                     DateTime azi = DateTime.Now;
                     string dataAzi = azi.ToString("dd.MM.yyyy");
                     string oraAzi = azi.ToString("HH:mm:ss");
-                    string fileName = $"Nota plata nr {numarNota} din data de {dataAzi}.pdf";
+                    string fileName = $"Nota plata nr {nrNota} din data de {dataAzi}.pdf";
                     string filePath = Path.Combine(folderPath, fileName);
 
                     using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -732,8 +732,8 @@ namespace Gestiune_Bar_proiect_LICENTA
                         oraCell.HorizontalAlignment = Element.ALIGN_CENTER;
                         infoTable.AddCell(oraCell);
 
-                        string casier = Environment.UserName;
-                        PdfPCell casierCell = new PdfPCell(new Phrase("Casier: " + casier, normalFont));
+                        
+                        PdfPCell casierCell = new PdfPCell(new Phrase("Casier: " + numecasier, normalFont));
                         casierCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
 
                         casierCell.HorizontalAlignment = Element.ALIGN_RIGHT;
