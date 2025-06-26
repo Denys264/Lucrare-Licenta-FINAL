@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="Administrare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdaugaCont.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdaugaFurnizor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdaugaProdusGestiune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdaugaCategorie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdaugaProdusMeniu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Meniu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="NotaIntrare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ModificaFurnizor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ModificaProdusGestiune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ModificaCategorie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StergeCategorie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StergeProdusGestiune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StergeProdusMeniu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StergeFurnizor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="StergeConturi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Rapoarte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MeniuAdministrator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MeniuBarman.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
