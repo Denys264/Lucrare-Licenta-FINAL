@@ -161,7 +161,6 @@ namespace Gestiune_Bar_proiect_LICENTA
                 {
                     conn.Open();
 
-                    // Luăm info despre produs: preț, stoc, etc.
                     using (SqlCommand cmdProdus = new SqlCommand("SELECT ID, UNITATE, PRET, CANTITATE FROM dbo.Produse WHERE NUME = @nume", conn))
                     {
                         cmdProdus.Parameters.AddWithValue("@nume", numeProdus);
@@ -169,19 +168,31 @@ namespace Gestiune_Bar_proiect_LICENTA
                         {
                             if (!reader.Read()) return;
 
+                            string unitate = reader["UNITATE"].ToString();
                             decimal pret = Convert.ToDecimal(reader["PRET"]);
+
+                            // Ajustăm cantitatea pentru "50ml"
+                            int cantitateFinala = cantitateIntrodusa;
+                            if (unitate == "50ml")
+                            {   if ( cantitateIntrodusa%50==0)
+                                cantitateFinala = (int)Math.Ceiling(cantitateIntrodusa / 50.0);
+                                else
+                                {
+                                    MessageBox.Show("Cantiatea pentru acest produs trebuie sa fie un multiplu de 50!");
+                                    return;
+                                }
+                            }
+
+                            decimal pretTotal = pret * cantitateFinala;
+
                             reader.Close();
 
-                            decimal pretTotal = pret * cantitateIntrodusa;
-
-                            // Luăm CUI-ul furnizorului
                             using (SqlCommand cmdFurnizor = new SqlCommand("SELECT CUI FROM dbo.Furnizori WHERE NUME = @nume", conn))
                             {
                                 cmdFurnizor.Parameters.AddWithValue("@nume", numeFurnizor);
                                 string cui = cmdFurnizor.ExecuteScalar()?.ToString() ?? "N/A";
 
-                                // Adăugăm rândul în tabel
-                                dataGridViewProduse.Rows.Add(numeProdus, cantitateIntrodusa, pretTotal.ToString("0.00"), numeFurnizor, cui);
+                                dataGridViewProduse.Rows.Add(numeProdus, cantitateFinala, pretTotal.ToString("0.00"), numeFurnizor, cui);
                             }
                         }
                     }
@@ -192,6 +203,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 MessageBox.Show($"Eroare la adăugarea produsului: {ex.Message}");
             }
         }
+
 
         private void Salveaza_Click(object sender, EventArgs e)
         {

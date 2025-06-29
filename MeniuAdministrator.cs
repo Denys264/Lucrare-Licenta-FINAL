@@ -235,7 +235,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         reportDate.SpacingAfter = 25f;
                         doc.Add(reportDate);
 
-                        // Divider line
+                      
                        
 
                         // Main table section title

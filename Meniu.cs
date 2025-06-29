@@ -681,7 +681,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                     string folderPath = Path.Combine(desktopPath, "Rapoarte", "Note de plata");
                     Directory.CreateDirectory(folderPath);
 
-                    int nrNota = Directory.GetFiles(folderPath, "Nota intrare *.pdf").Length + 1;
+                    int nrNota = Directory.GetFiles(folderPath, "Nota plata *.pdf").Length + 1;
                     DateTime azi = DateTime.Now;
                     string dataAzi = azi.ToString("dd.MM.yyyy");
                     string oraAzi = azi.ToString("HH:mm:ss");
