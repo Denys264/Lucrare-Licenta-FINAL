@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using iText.Layout.Splitting;
 using Microsoft.Data.SqlClient;
 
 namespace Gestiune_Bar_proiect_LICENTA
@@ -220,6 +221,8 @@ namespace Gestiune_Bar_proiect_LICENTA
 
                                 // Reîncărcăm lista de produse din categorie
                                 Categorie_SelectedIndexChanged(null, null);
+                                Produs.SelectedItem = null;
+                                
                             }
                             else
                             {
@@ -239,6 +242,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                                     MessageBoxIcon.Error);
                 }
             }
+            return;
         }
 
         private void Inapoi_Click(object sender, EventArgs e)
@@ -247,6 +251,6 @@ namespace Gestiune_Bar_proiect_LICENTA
             this.Close();
         }
 
-        
+
     }
 }

@@ -848,7 +848,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         deleteCmd.ExecuteNonQuery();
                     }
 
-                    // Resetează ID-ul/autoincrementul (presupunând că tabela are identity)
+                    // Resetează ID-ul/autoincrementul 
                     string reseedQuery = $"DBCC CHECKIDENT ('COMENZI.{NumeTabela}', RESEED, 0)";
                     using (SqlCommand reseedCmd = new SqlCommand(reseedQuery, conn))
                     {
@@ -861,7 +861,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                     deleteCmd.ExecuteNonQuery();
                 }
 
-                // Resetează ID-ul/autoincrementul (presupunând că tabela are identity)
+                // Resetează ID-ul/autoincrementul 
                 string reseedQuery1 = $"DBCC CHECKIDENT ('RAPOARTE.NotaPlata', RESEED, 0)";
                 using (SqlCommand reseedCmd = new SqlCommand(reseedQuery1, conn))
                 {

@@ -185,13 +185,13 @@ namespace Gestiune_Bar_proiect_LICENTA
 
                 try
                 {
-                    // PDF directories preparation
+                    // Pregătirea directoarelor pentru PDF
                     string dataAzi = DateTime.Now.ToString("yyyy-MM-dd");
                     string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Rapoarte", "Raport Zilnic");
                     Directory.CreateDirectory(folder);
                     string pdfPath = Path.Combine(folder, $"Raport Zilnic {dataAzi}.pdf");
 
-                    // SQL Server connection
+                    // Conexiunea la SQL Server
                     string connectionString = @"Data Source=localhost;Initial Catalog=RALUELECAFEBAR;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
                     DataTable dt = new DataTable();
 
@@ -204,28 +204,28 @@ namespace Gestiune_Bar_proiect_LICENTA
                         }
                     }
 
-                    // Create PDF
+                    // Crearea PDF-ului
                     using (FileStream fs = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
                     using (Document doc = new Document(PageSize.A4, 25, 25, 25, 25))
                     using (PdfWriter writer = PdfWriter.GetInstance(doc, fs))
                     {
                         doc.Open();
 
-                        // Custom colors
-                        BaseColor primaryColor = new BaseColor(44, 62, 80); // Dark blue
-                        BaseColor secondaryColor = new BaseColor(52, 152, 219); // Blue
-                        BaseColor accentColor = new BaseColor(231, 76, 60); // Red
-                        BaseColor lightBg = new BaseColor(247, 247, 247); // Light gray
-                        BaseColor darkText = new BaseColor(51, 51, 51); // Dark gray
+                        // Culori personalizate
+                        BaseColor primaryColor = new BaseColor(44, 62, 80); // Albastru închis
+                        BaseColor secondaryColor = new BaseColor(52, 152, 219); // Albastru
+                        BaseColor accentColor = new BaseColor(231, 76, 60); // Roșu
+                        BaseColor lightBg = new BaseColor(247, 247, 247); // Gri deschis
+                        BaseColor darkText = new BaseColor(51, 51, 51); // Gri închis
 
-                        // Company information header
+                        // Antet cu informațiile companiei
                         Paragraph companyName = new Paragraph("S.C. RALU ELE CAFEBAR S.R.L",
                             FontFactory.GetFont("Arial", 16, iTextSharp.text.Font.BOLD, primaryColor));
                         companyName.Alignment = Element.ALIGN_CENTER;
                         companyName.SpacingAfter = 5f;
                         doc.Add(companyName);
 
-                        // Company details
+                        // Detalii companie
                         Paragraph companyDetails = new Paragraph();
                         companyDetails.Alignment = Element.ALIGN_CENTER;
                         companyDetails.Font = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, darkText);
@@ -235,7 +235,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         companyDetails.SpacingAfter = 20f;
                         doc.Add(companyDetails);
 
-                        // Report title with decorative elements
+                        // Titlul raportului cu elemente decorative
                         Paragraph reportTitle = new Paragraph("RAPORT ZILNIC DE ACTIVITATE",
                             FontFactory.GetFont("Arial", 18, iTextSharp.text.Font.BOLD, secondaryColor));
                         reportTitle.Alignment = Element.ALIGN_CENTER;
@@ -243,31 +243,28 @@ namespace Gestiune_Bar_proiect_LICENTA
                         reportTitle.SpacingAfter = 15f;
                         doc.Add(reportTitle);
 
-                        // Date and time section
+                        // Secțiune dată și oră
                         Paragraph reportDate = new Paragraph($"Data raport: {DateTime.Now.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("ro-RO"))}",
                             FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.ITALIC, BaseColor.GRAY));
                         reportDate.Alignment = Element.ALIGN_CENTER;
                         reportDate.SpacingAfter = 25f;
                         doc.Add(reportDate);
 
-                        // Divider line
-
-
-                        // Main table section title
+                        // Titlul secțiunii tabel principale
                         Paragraph tableTitle = new Paragraph("VÂNZARI ZILNICE",
                             FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.BOLD, primaryColor));
                         tableTitle.SpacingBefore = 20f;
                         tableTitle.SpacingAfter = 15f;
                         doc.Add(tableTitle);
 
-                        // Main table
-                        PdfPTable mainTable = new PdfPTable(new float[] { 3, 1, 1 }); // Column widths
+                        // Tabel principal
+                        PdfPTable mainTable = new PdfPTable(new float[] { 3, 1, 1 }); // Lățimi coloane
                         mainTable.WidthPercentage = 100;
                         mainTable.SpacingBefore = 10f;
                         mainTable.SpacingAfter = 20f;
                         mainTable.DefaultCell.Padding = 8f;
 
-                        // Table headers
+                        // Antetele tabelului
                         string[] headers = { "PRODUS", "CANTITATE", "VALOARE (lei)" };
                         foreach (string header in headers)
                         {
@@ -282,7 +279,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                             mainTable.AddCell(headerCell);
                         }
 
-                        // Table rows with alternating colors
+                        // Rânduri tabel cu culori alternative
                         bool alternateRow = false;
                         foreach (DataRow row in dt.Rows)
                         {
@@ -311,7 +308,7 @@ namespace Gestiune_Bar_proiect_LICENTA
 
                         doc.Add(mainTable);
 
-                        // Totals section
+                        // Secțiunea totaluri
                         decimal totalVal = dt.AsEnumerable()
                             .Where(r => r["PRET"] != DBNull.Value)
                             .Sum(r => Convert.ToDecimal(r["PRET"]));
@@ -323,7 +320,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         totalsTable.HorizontalAlignment = Element.ALIGN_RIGHT;
                         totalsTable.DefaultCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
 
-                        // Total quantity
+                        // Total cantitate
                         PdfPCell qtyLabelCell = new PdfPCell(new Phrase("Total produse vândute:",
                             FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.BOLD, darkText)));
                         qtyLabelCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
@@ -335,7 +332,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         qtyValueCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
                         totalsTable.AddCell(qtyValueCell);
 
-                        // Total value
+                        // Total valoare
                         PdfPCell valLabelCell = new PdfPCell(new Phrase("Total încasari:",
                             FontFactory.GetFont("Arial", 11, iTextSharp.text.Font.BOLD, primaryColor)));
                         valLabelCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
@@ -349,7 +346,7 @@ namespace Gestiune_Bar_proiect_LICENTA
 
                         doc.Add(totalsTable);
 
-                        // Top products section
+                        // Secțiunea top produse
                         var top10 = dt.AsEnumerable()
                             .GroupBy(r => r["NUME"].ToString())
                             .Select(g => new
@@ -361,19 +358,19 @@ namespace Gestiune_Bar_proiect_LICENTA
                             .Take(10)
                             .ToList();
 
-                        // Section header
+                        // Antet secțiune top produse
                         Paragraph topProductsHeader = new Paragraph("TOP 10 PRODUSE - CANTITĂȚI VÂNDUTE",
                             FontFactory.GetFont("Arial", 14, iTextSharp.text.Font.BOLD, primaryColor));
                         topProductsHeader.SpacingBefore = 30f;
                         topProductsHeader.SpacingAfter = 15f;
                         doc.Add(topProductsHeader);
 
-                        // Top products table
-                        PdfPTable topTable = new PdfPTable(new float[] { 3, 1, 1 }); // Product, Qty, Percentage
+                        // Tabel top produse
+                        PdfPTable topTable = new PdfPTable(new float[] { 3, 1, 1 }); // Produs, Cantitate, Pondere
                         topTable.WidthPercentage = 80;
                         topTable.DefaultCell.Padding = 8f;
 
-                        // Table header
+                        // Antet tabel
                         string[] topHeaders = { "PRODUS", "CANTITATE", "PONDERE" };
                         foreach (string header in topHeaders)
                         {
@@ -382,20 +379,20 @@ namespace Gestiune_Bar_proiect_LICENTA
                             { BackgroundColor = secondaryColor, Padding = 10f });
                         }
 
-                        // Calculate total for percentage
+                        // Calcul total pentru procentaj
                         int grandTotal = top10.Sum(x => x.TotalCantitate);
 
-                        // Table rows
+                        // Rânduri tabel
                         foreach (var p in top10)
                         {
-                            // Product name
+                            // Nume produs
                             topTable.AddCell(new Phrase(p.NUME, FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.NORMAL, darkText)));
 
-                            // Quantity
+                            // Cantitate
                             topTable.AddCell(new Phrase(p.TotalCantitate.ToString(),
                                 FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.BOLD, darkText)));
 
-                            // Percentage
+                            // Procentaj
                             double percentage = (double)p.TotalCantitate / grandTotal * 100;
                             topTable.AddCell(new Phrase($"{percentage:0.0}%",
                                 FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.NORMAL, BaseColor.GRAY)));
@@ -403,7 +400,7 @@ namespace Gestiune_Bar_proiect_LICENTA
 
                         doc.Add(topTable);
 
-                        // Summary paragraph
+                        // Paragraf sumar
                         Paragraph summary = new Paragraph();
                         summary.Alignment = Element.ALIGN_JUSTIFIED;
                         summary.Font = FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.NORMAL, darkText);
@@ -412,10 +409,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         summary.Add("Documentul prezinta activitatea comercială zilnică si poate fi folosit pentru analiza vânzărilor.");
                         doc.Add(summary);
 
-
-
-
-                        // Footer text
+                        // Text footer
                         Paragraph footer = new Paragraph();
                         footer.Alignment = Element.ALIGN_CENTER;
                         footer.Font = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.GRAY);
@@ -425,7 +419,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         footer.SpacingBefore = 10f;
                         doc.Add(footer);
 
-                        // Page number
+                        // Număr pagină
                         Paragraph pageNumber = new Paragraph($"Pagina {writer.PageNumber}",
                             FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.ITALIC, BaseColor.GRAY));
                         pageNumber.Alignment = Element.ALIGN_RIGHT;
@@ -436,6 +430,7 @@ namespace Gestiune_Bar_proiect_LICENTA
 
                     MessageBox.Show("Raportul PDF a fost generat cu succes!", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show("Eroare la generarea raportului: " + ex.Message, "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);

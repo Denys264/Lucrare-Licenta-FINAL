@@ -148,6 +148,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                     Produs.SelectedItem = null;
 
                     MessageBox.Show($"Produsul '{numeProdus}' a fost adăugat în categoria '{categorie}' și este acum vizibil în meniu.", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
             }
             catch (Exception ex)
