@@ -13,14 +13,16 @@ namespace Gestiune_Bar_proiect_LICENTA
 {
     public partial class Administrare : Form
     {
-        public Administrare()
+        private int verificat;
+        public Administrare(int verificare)
         {
             InitializeComponent();
+            verificat = verificare;
         }
 
         private void InapoiPagina_Click(object sender, EventArgs e)
         {
-            MeniuAdministrator f1 = new MeniuAdministrator();
+            MeniuAdministrator f1 = new MeniuAdministrator(verificat);
             f1.Show();
             this.Close();
         }

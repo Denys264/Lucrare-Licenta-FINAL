@@ -27,10 +27,11 @@ namespace Gestiune_Bar_proiect_LICENTA
         string okstring;
         bool Inceput;
         public string NumeTabela;
-        public MeniuBarman(string userUtilizator)
+        private int verificare;
+        public MeniuBarman(string userUtilizator, int verificat)
         {
             user = userUtilizator;
-
+            verificare = verificat;
             InitializeComponent();
         }
 
@@ -43,7 +44,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
             NumeTabela = Comanda1.Name;
 
-            Meniu f1 = new Meniu(NumeTabela, "Admin");
+            Meniu f1 = new Meniu(NumeTabela, "Admin", verificare);
             f1.Show();
             this.Hide();
         }
@@ -87,16 +88,28 @@ namespace Gestiune_Bar_proiect_LICENTA
             {
                 Incepere_Final.Text = "Incepere Tura";
             }
-            saptamanal();
-            lunar();
+            
 
         }
-
+        private int contor = 0;
+        private bool pornire = true;
         private void Temporizator_Tick(object sender, EventArgs e)
         {
             ORA.Text = DateTime.Now.Hour.ToString("00");
             MINUTE.Text = DateTime.Now.Minute.ToString("00");
             SECUNDE.Text = DateTime.Now.Second.ToString("00");
+
+            contor++;
+            if (pornire == true)
+            {
+                if (contor == 4)
+                {
+                    contor = 0;
+                    pornire = false;
+                    saptamanal();
+                    lunar();
+                }
+            }
         }
 
         private void SchimbareCont_Click(object sender, EventArgs e)
@@ -466,7 +479,7 @@ namespace Gestiune_Bar_proiect_LICENTA
         }
         private void Rapoarte_Click(object sender, EventArgs e)
         {
-            Rapoarte f5 = new Rapoarte(user);
+            Rapoarte f5 = new Rapoarte(user, verificare);
             f5.Show();
             this.Hide();
         }
@@ -480,7 +493,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
             NumeTabela = Comanda2.Name;
 
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -494,7 +507,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda3.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -508,7 +521,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda4.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -522,7 +535,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda5.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -536,7 +549,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda6.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -550,7 +563,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda7.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -563,7 +576,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 return;
             }
             NumeTabela = Comanda8.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -576,7 +589,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 return;
             }
             NumeTabela = Comanda9.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -589,7 +602,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 return;
             }
             NumeTabela = Comanda10.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -602,7 +615,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 return;
             }
             NumeTabela = Comanda11.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -615,7 +628,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 return;
             }
             NumeTabela = Comanda12.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -628,7 +641,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                 return;
             }
             NumeTabela = Comanda13.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -642,7 +655,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda14.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -656,7 +669,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
 
             NumeTabela = Comanda15.Name;
-            Meniu f1 = new Meniu(NumeTabela, user);
+            Meniu f1 = new Meniu(NumeTabela, user, verificare);
             f1.Show();
             this.Hide();
         }
@@ -806,7 +819,9 @@ namespace Gestiune_Bar_proiect_LICENTA
 
             // Dacă zilele trecute sunt multiplu de 7 și au trecut cel puțin 7 zile
             if (zileTrecute >= 7 && zileTrecute % 7 == 0)
-            {
+           
+            { if (verificare == 0)
+                { verificare = 1; 
                 DialogResult confirmare = MessageBox.Show(
                  "Astazi este ziua pentru raportul saptamanal, doriti sa intrari direct in Rapoarte sa il scoateti?",
                      "Raport Saptamanal",
@@ -814,11 +829,12 @@ namespace Gestiune_Bar_proiect_LICENTA
                             MessageBoxIcon.Question
   );
 
-                if (confirmare != DialogResult.Yes)
-                    return;
-                Rapoarte f1 = new Rapoarte(user);
-                this.Hide();
-                f1.Show();
+                    if (confirmare != DialogResult.Yes)
+                        return;
+                    Rapoarte f1 = new Rapoarte(user, verificare);
+                    this.Hide();
+                    f1.Show();
+                }
             }
         }
         private void lunar()
@@ -831,19 +847,22 @@ namespace Gestiune_Bar_proiect_LICENTA
 
             // Verifică dacă s-a împlinit fix o lună, două luni, trei etc., și suntem exact în ziua 23
             if (luniTrecute >= 1 && azi.Day == dataInitiala.Day)
-            {
-                DialogResult confirmare = MessageBox.Show(
-                 "Astazi este ziua pentru raportul lunar, doriti sa intrari direct in Rapoarte sa il scoateti?",
-                     "Raport Lunar",
-                        MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question
-  );
+            { if (verificare == 0)
+                {
+                    verificare = 1;
+                    DialogResult confirmare = MessageBox.Show(
+                     "Astazi este ziua pentru raportul lunar, doriti sa intrari direct in Rapoarte sa il scoateti?",
+                         "Raport Lunar",
+                            MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question
+      );
 
-                if (confirmare != DialogResult.Yes)
-                    return;
-                Rapoarte f1 = new Rapoarte(user);
-                this.Hide();
-                f1.Show();
+                    if (confirmare != DialogResult.Yes)
+                        return;
+                    Rapoarte f1 = new Rapoarte(user, verificare);
+                    this.Hide();
+                    f1.Show();
+                }
             }
         }
 

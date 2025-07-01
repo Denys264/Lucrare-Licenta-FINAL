@@ -25,9 +25,10 @@ namespace Gestiune_Bar_proiect_LICENTA
         private string cantitateCurenta = "1";
         private string NumeTabela;
         private string numecasier;
+        private int verificare;
 
-        public Meniu(string nume, string casier)
-        {
+        public Meniu(string nume, string casier, int verificat)
+        {   verificare = verificat;
             numecasier = casier;
             NumeTabela = nume;
             InitializeComponent();
@@ -107,13 +108,13 @@ namespace Gestiune_Bar_proiect_LICENTA
         private void IesireForm()
         {   if (numecasier == "Admin")
             {
-                MeniuAdministrator f1 = new MeniuAdministrator();
+                MeniuAdministrator f1 = new MeniuAdministrator(verificare);
                 f1.Show();
                 this.Hide();
             }
             else
             {
-                MeniuBarman f1 = new MeniuBarman(numecasier);
+                MeniuBarman f1 = new MeniuBarman(numecasier, verificare);
                     f1.Show();
                 this.Hide();
             }

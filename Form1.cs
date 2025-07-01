@@ -5,7 +5,7 @@ namespace Gestiune_Bar_proiect_LICENTA
 {
     public partial class PaginaLogin : Form
     { public static string connectionString = "Data Source=localhost;Initial Catalog=RALUELECAFEBAR;Integrated Security=True;Trust Server Certificate=True";
-        
+        private int verificare = 0;
         public PaginaLogin()
         {
             InitializeComponent();
@@ -35,8 +35,10 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
             else if (username == "Admin" && parola == "raluelebar")
             {
-                MeniuAdministrator f1 = new MeniuAdministrator();
+                MeniuAdministrator f1 = new MeniuAdministrator(verificare);
+                
                 f1.Show();
+
                 this.Hide();
                 return;
 
@@ -58,7 +60,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                         if (count > 0)
                         {
                             // Autentificare reușită
-                           MeniuBarman f1 = new MeniuBarman(username);  
+                           MeniuBarman f1 = new MeniuBarman(username, verificare);  
                         f1.Show();
                         this.Hide();
                         }
