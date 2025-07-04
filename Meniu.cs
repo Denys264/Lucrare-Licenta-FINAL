@@ -254,6 +254,10 @@ namespace Gestiune_Bar_proiect_LICENTA
                 }
             }
         }
+        // Variabilă membru în formular:
+        private Button btnCategorieSelectata;
+
+        // Încarcă toate categoriile
         private void IncarcaCategorii()
         {
             using (var conn = new SqlConnection(ConnectionString))
@@ -271,6 +275,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             }
         }
 
+        // Adaugă un buton pentru fiecare categorie
         private void AdaugaButonCategorie(string numeTabela)
         {
             var btn = new Button
@@ -290,10 +295,16 @@ namespace Gestiune_Bar_proiect_LICENTA
             btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(60, 60, 60);
             btn.FlatAppearance.MouseDownBackColor = _culoarePrimara;
 
-            btn.Click += (s, e) => IncarcaProdusePentruCategorie(numeTabela);
+            btn.Click += (s, e) =>
+            {
+                btnCategorieSelectata = btn; // Salvează categoria curentă
+                IncarcaProdusePentruCategorie(numeTabela);
+            };
+
             PanouCategorii.Controls.Add(btn);
         }
 
+        // Încarcă produsele pentru o categorie
         private void IncarcaProdusePentruCategorie(string numeCategorie)
         {
             PanouProduse.SuspendLayout();
@@ -303,8 +314,8 @@ namespace Gestiune_Bar_proiect_LICENTA
             {
                 conn.Open();
                 string query = $@"SELECT p.NUME, p.PRET, p.UNITATE, p.CANTITATE FROM PRODUSE p 
-                                INNER JOIN CATEGORII.[{numeCategorie}] c ON p.ID = c.ID_Produs 
-                                WHERE p.AFISAT = 1 ORDER BY p.NUME";
+                          INNER JOIN CATEGORII.[{numeCategorie}] c ON p.ID = c.ID_Produs 
+                          WHERE p.AFISAT = 1 ORDER BY p.NUME";
                 using (var cmd = new SqlCommand(query, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -312,10 +323,10 @@ namespace Gestiune_Bar_proiect_LICENTA
                     while (reader.Read())
                     {
                         AdaugaCardProdus(reader["NUME"].ToString(),
-                                        Convert.ToDecimal(reader["PRET"]),
-                                        reader["UNITATE"].ToString(),
-                                        Convert.ToDecimal(reader["CANTITATE"]),
-                                        ref top);
+                                         Convert.ToDecimal(reader["PRET"]),
+                                         reader["UNITATE"].ToString(),
+                                         Convert.ToDecimal(reader["CANTITATE"]),
+                                         ref top);
                     }
                 }
             }
@@ -323,6 +334,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             PanouProduse.ResumeLayout();
         }
 
+        // Adaugă card vizual pentru un produs
         private void AdaugaCardProdus(string nume, decimal pretUnitar, string unitate, decimal cantitateDisponibila, ref int topPosition)
         {
             var card = new Panel
@@ -382,13 +394,35 @@ namespace Gestiune_Bar_proiect_LICENTA
                 decimal total = cantitate * pretUnitar;
 
                 if (cantitate == 0)
+                {
                     MessageBox.Show("Cantitate invalidă!");
+                }
                 else if (cantitateDisponibila < cantitate)
+                {
                     MessageBox.Show("Stocul este prea mic pentru această comandă!");
+                }
                 else
                 {
+                    // 1. Adăugare în DataGridView
                     int rowIndex = dataGridViewProduse.Rows.Add(nume, cantitate.ToString(), total.ToString("0.00"));
                     dataGridViewProduse.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Blue;
+
+                    // 2. Scădere stoc în baza de date
+                    using (var conn = new SqlConnection(ConnectionString))
+                    {
+                        conn.Open();
+                        string updateQuery = @"UPDATE PRODUSE SET CANTITATE = CANTITATE - @cantitate WHERE NUME = @nume";
+                        using (var cmd = new SqlCommand(updateQuery, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@cantitate", cantitate);
+                            cmd.Parameters.AddWithValue("@nume", nume);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    // 3. Reîncarcă produsele pentru categoria curentă
+                    if (btnCategorieSelectata != null)
+                        IncarcaProdusePentruCategorie((string)btnCategorieSelectata.Tag);
                 }
 
                 dataGridViewProduse.ClearSelection();
@@ -401,6 +435,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             topPosition += card.Height + 15;
         }
 
+        // Ajustează layout-ul cardurilor
         private void ActualizeazaLayout()
         {
             foreach (Control c in PanouProduse.Controls)
