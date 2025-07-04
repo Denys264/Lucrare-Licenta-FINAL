@@ -87,7 +87,7 @@ namespace Gestiune_Bar_proiect_LICENTA
         {
             if (Categorie.SelectedItem == null || Produs.SelectedItem == null)
             {
-                MessageBox.Show("Selectați atât o categorie cât și un produs.", "Avertisment", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               
                 return;
             }
 

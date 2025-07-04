@@ -201,16 +201,7 @@ namespace Gestiune_Bar_proiect_LICENTA
                                 insertCmd.ExecuteNonQuery();
                             }
 
-                            string updateStocQuery = @"
-                                UPDATE Produse
-                                SET Cantitate = Cantitate - @cantitate
-                                WHERE Nume = @nume";
-                            using (SqlCommand updateCmd = new SqlCommand(updateStocQuery, conn))
-                            {
-                                updateCmd.Parameters.AddWithValue("@nume", nume);
-                                updateCmd.Parameters.AddWithValue("@cantitate", cantitate);
-                                updateCmd.ExecuteNonQuery();
-                            }
+                            
                         }
                         else if (culoare == Color.Red)
                         {
