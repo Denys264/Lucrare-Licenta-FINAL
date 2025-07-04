@@ -161,10 +161,7 @@ namespace Gestiune_Bar_proiect_LICENTA
             // Verificăm că s-au selectat categorie și produs
             if (Categorie.SelectedItem == null || Produs.SelectedItem == null)
             {
-                MessageBox.Show("Trebuie să selectați atât o categorie cât și un produs.",
-                                "Atenție",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
+               
                 return;
             }
 
